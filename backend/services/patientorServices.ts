@@ -34,14 +34,3 @@ export const addPatient = (newPatientData: NewPatients): Patients => {
   patients.push(newPatientEntry);
   return newPatientEntry;
 };
-
-// const isString = (text: unknown): text is string => {
-//   return text instanceof String || typeof text === "string";
-// };
-
-// const parseComment = (comment: unknown): string => {
-//   if (!comment || !isString(comment)) {
-//     throw new Error("Comment is missing or incorrect");
-//   }
-//   return comment;
-// };
