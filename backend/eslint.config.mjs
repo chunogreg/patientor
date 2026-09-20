@@ -11,7 +11,7 @@ export default tseslint.config({
 
   languageOptions: {
     parserOptions: {
-      projectServices: true,
+      projectService: true,
       tsConfigRootDir: import.meta.dirname,
     },
   },
