@@ -1,0 +1,30 @@
+import eslint from "eslint";
+import tseslint from "typescript-eslint";
+import stylistic from "@stylistic/eslint-plugin";
+
+export default tseslint.config({
+  files: ["**/*.ts"],
+  extends: [
+    eslint.configs.recommended,
+    ...tseslint.configs.recommendedTypeChecked,
+  ],
+
+  languageOptions: {
+    parserOptions: {
+      projectServices: true,
+      tsConfigRootDir: import.meta.dirname,
+    },
+  },
+  plugins: { "@stylistic": stylistic },
+  rules: {
+    "@stylistic/semi": "error",
+    "typescript-eslint/no-unsafe-assignment": "error",
+    "typescript-eslint/no-implicit-any": "error",
+    "typescript-eslint/explicit-function-return-type": "off",
+    "typescript-eslint/explicit-module-boundary-types": "off",
+    "typescript-eslint/restrict-template-expressions": "off",
+    "typescript-eslint/restrict-plus-operands": "off",
+    "typescript-eslint/consistent-type-imports": "error",
+    "typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
+  },
+});
