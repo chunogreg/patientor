@@ -1,5 +1,4 @@
 import express from "express";
-// @ts-expect-error cors has no bundled declaration file
 import cors from "cors";
 import { parseNewPatientsEntry } from "./utils.ts";
 
