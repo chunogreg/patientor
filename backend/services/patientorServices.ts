@@ -20,17 +20,25 @@ export const getPatients = (): Patients[] => {
 };
 
 export const getNonsensitivePatients = (): NonsensitivePatients[] => {
-  return patients.map(({ id, name, dateOfBirth, gender, occupation }) => ({
-    id,
-    name,
-    dateOfBirth,
-    gender,
-    occupation,
-  }));
+  return patients.map(
+    ({ id, name, dateOfBirth, gender, occupation, entries }) => ({
+      id,
+      name,
+      dateOfBirth,
+
+      gender,
+      occupation,
+      entries,
+    }),
+  );
 };
 
 export const addPatient = (newPatientData: NewPatients): Patients => {
-  const newPatientEntry = { id: uuid(), ...newPatientData };
+  const newPatientEntry: Patients = {
+    id: uuid(),
+    ...newPatientData,
+    entries: [],
+  };
   patients.push(newPatientEntry);
   return newPatientEntry;
 };

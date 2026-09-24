@@ -6,6 +6,7 @@ import {
   getDiagnoses,
   getNonsensitivePatients,
   addPatient,
+  getPatients,
 } from "./services/patientorServices.ts";
 
 const app = express();
@@ -26,7 +27,7 @@ app.get("/api/diagnoses", (_req, res) => {
 
 app.post("/api/patients", (req, res) => {
   try {
-    const { name, dateOfBirth, ssn, gender, occupation } =
+    const { name, dateOfBirth, ssn, gender, occupation, entries } =
       parseNewPatientsEntry(req.body);
     const addedEntry = addPatient({
       name,
@@ -34,6 +35,7 @@ app.post("/api/patients", (req, res) => {
       ssn,
       gender,
       occupation,
+      entries,
     });
     res.json(addedEntry);
   } catch (error: unknown) {
@@ -43,6 +45,12 @@ app.post("/api/patients", (req, res) => {
     }
     res.status(400).send(errorMsg);
   }
+});
+
+app.get("/api/patients/:id", (req, res) => {
+  const id = req.params.id;
+  const patient = getPatients().find((p) => p.id === id);
+  return res.json(patient); // Return single patient data
 });
 
 const PORT = process.env.PORT || 3001;
