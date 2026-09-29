@@ -3,6 +3,8 @@ import type {
   Patients,
   NonsensitivePatients,
   NewPatients,
+  Entry,
+  EntryWithoutId,
 } from "../types.ts";
 import diagnosesData from "../data/diagnoses.ts";
 import patientsData from "../data/patients.ts";
@@ -41,4 +43,16 @@ export const addPatient = (newPatientData: NewPatients): Patients => {
   };
   patients.push(newPatientEntry);
   return newPatientEntry;
+};
+
+//============================
+
+export const addEntry = (id: string, newEntrydata: EntryWithoutId) => {
+  const patientForEntry = patients.find((p) => p.id === id);
+
+  if (!patientForEntry) return;
+
+  const newEntry: Entry = { ...newEntrydata, id: uuid() };
+  patientForEntry.entries.push(newEntry);
+  return newEntry;
 };

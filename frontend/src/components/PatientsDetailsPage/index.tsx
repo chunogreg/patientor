@@ -6,10 +6,13 @@ import { Diagnosis, Patient } from "../../types";
 import { Male } from "@mui/icons-material";
 import { Female } from "@mui/icons-material";
 import PatientEntryDetails from "./PatientEntryDetails";
+//import PatientEntryForm from "../AddPatientModal/PatientEntryForm";
+import PatientEntryForm2 from "../AddPatientModal/PatientEntryForm2";
 
 const PatientDetailsPage = () => {
-  const [patient, setPatient] = useState<Patient | null>(null);
+  const [patients, setPatients] = useState<Patient | undefined>(undefined);
   const [diagnoses, setDiagnoses] = useState<Diagnosis[]>([]);
+  const [showForm, setShowForm] = useState(false);
 
   //  console.log("==DIAGNOSE==", diagnoses[3]);
 
@@ -20,29 +23,45 @@ const PatientDetailsPage = () => {
     const getPatient = async () => {
       if (!id) return;
       const patientData = await patientServices.getOne(id);
-      setPatient(patientData);
+      setPatients(patientData);
       const diagnosesData = await diagnosesServices.getAll();
       setDiagnoses(diagnosesData);
     };
     getPatient();
   }, [id]);
 
-  // console.log(" ==PATIENT=", patient);
-
   return (
     <div>
-      {patient && (
+      {!showForm && (
+        <button type="button" onClick={() => setShowForm(true)}>
+          Add New Entry
+        </button>
+      )}
+      {patients && (
         <>
-          <div style={{ fontSize: 22, marginBottom: 12 }}>
-            {patient.name} {patient.gender === "male" ? <Male /> : <Female />}
+          <div style={{ marginBottom: 12 }}>
+            <h2>
+              {patients.name}{" "}
+              {patients.gender === "male" ? <Male /> : <Female />}
+            </h2>
           </div>{" "}
-          <div> ssn: {patient.ssn}</div>
-          <div>occupation: {patient.occupation}</div>{" "}
-          <div> date of birth: {patient.dateOfBirth}</div>{" "}
+          <div> ssn: {patients.ssn}</div>
+          <div>occupation: {patients.occupation}</div>{" "}
+          <div> date of birth: {patients.dateOfBirth}</div>{" "}
         </>
       )}
-      {patient && (
-        <PatientEntryDetails patient={patient} diagnoses={diagnoses} />
+      {patients && (
+        <PatientEntryDetails patients={patients} diagnoses={diagnoses} />
+      )}
+      {/* {patients && (
+        <PatientEntryForm patients={patients} setPatient={setPatient} />
+      )} */}{" "}
+      {showForm && patients && (
+        <PatientEntryForm2
+          patients={patients}
+          setPatient={setPatients}
+          diagnoses={diagnoses}
+        />
       )}
     </div>
   );

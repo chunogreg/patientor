@@ -36,7 +36,7 @@ const App = () => {
 
           <Divider sx={{ marginY: 2 }} />
           <Routes>
-            <Route path="/:id" element={<PatientDetailsPage />} />
+            <Route path="/patients/:id" element={<PatientDetailsPage />} />
 
             <Route
               path="/"

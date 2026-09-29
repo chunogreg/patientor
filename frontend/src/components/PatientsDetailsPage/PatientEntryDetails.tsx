@@ -1,12 +1,12 @@
 import { Diagnosis, Entry, Patient } from "../../types";
-import { HealthTypeIcons, Rating } from "../HealthIcons";
+import { HealthTypeIcons, RatingIcons } from "../HealthIcons";
 
 interface Props {
-  patient: Patient;
+  patients: Patient;
   diagnoses: Diagnosis[];
 }
 
-const PatientEntryDetails = ({ patient, diagnoses }: Props) => {
+const PatientEntryDetails = ({ patients, diagnoses }: Props) => {
   console.log("==DIAGNOSE==", diagnoses[0]);
 
   const entryDetails = (entry: Entry) => {
@@ -23,14 +23,11 @@ const PatientEntryDetails = ({ patient, diagnoses }: Props) => {
           >
             <div>
               {entry.date} <HealthTypeIcons type={entry.type} />
-            </div>{" "}
-            <div>
-              {" "}
-              <i>{entry.description} </i>{" "}
             </div>
+            <div>{entry.description}</div>
             <div>
               {" "}
-              <Rating rating={entry.healthCheckRating} />{" "}
+              <RatingIcons rating={entry.healthCheckRating} />{" "}
             </div>
             {/* {rating(entry.healthCheckRating)} </div> */}
             <div>Diagnosed by: {entry.specialist} </div>
@@ -49,15 +46,11 @@ const PatientEntryDetails = ({ patient, diagnoses }: Props) => {
             <div>
               {entry.date} <HealthTypeIcons type={entry.type} />
             </div>
-            <div>
-              <i>{entry.description} </i>{" "}
-            </div>
+            <div>{entry.description}</div>
             <div>
               {entry.diagnosisCodes?.map((d) => (
                 <ul key={d}>
-                  <li>
-                    {d} {diagnoses.find((diag) => diag.code == d)?.name}
-                  </li>
+                  {d} {diagnoses.find((diag) => diag.code == d)?.name}
                 </ul>
               ))}
             </div>
@@ -83,21 +76,21 @@ const PatientEntryDetails = ({ patient, diagnoses }: Props) => {
               {entry.date} <HealthTypeIcons type={entry.type} />{" "}
               {entry.employerName}
             </div>{" "}
-            <div>
-              <i>{entry.description} </i>
-            </div>
+            <div>{entry.description}</div>
             <div>
               {entry.diagnosisCodes?.map((d) => (
                 <ul key={d}>
-                  <li>
-                    {d} {diagnoses.find((diag) => diag.code === d)?.name}
-                  </li>
+                  {d} {diagnoses.find((diag) => diag.code === d)?.name}
                 </ul>
               ))}
             </div>
             <div>
-              Sick leave: {entry.sickLeave?.startDate} to{" "}
-              {entry.sickLeave?.endDate}
+              {entry.sickLeave && (
+                <>
+                  <span>Sick leave:</span> {entry.sickLeave.startDate} -{" "}
+                  {entry.sickLeave.endDate}
+                </>
+              )}
             </div>
             <br />
             <div>Diagnosed by: {entry.specialist}</div>
@@ -124,8 +117,8 @@ const PatientEntryDetails = ({ patient, diagnoses }: Props) => {
           </div> <div>{e.specialist}</div>
         </div>
       ))} */}{" "}
-      <h3>{patient.entries.length === 0 ? "no entry" : "Entries"}</h3>
-      {patient.entries.map((e) => (
+      <h3>{patients.entries.length === 0 ? "no entry" : "Entries"}</h3>
+      {patients.entries.map((e) => (
         <div key={e.id}>{entryDetails(e)}</div>
       ))}
     </div>

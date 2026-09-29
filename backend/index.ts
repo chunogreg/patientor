@@ -1,13 +1,15 @@
 import express from "express";
 import cors from "cors";
 import { parseNewPatientsEntry } from "./utils.ts";
-
+import z from "zod";
 import {
   getDiagnoses,
   getNonsensitivePatients,
   addPatient,
   getPatients,
+  addEntry,
 } from "./services/patientorServices.ts";
+import { entrySchema } from "./types.ts";
 
 const app = express();
 app.use(cors());
@@ -51,6 +53,26 @@ app.get("/api/patients/:id", (req, res) => {
   const id = req.params.id;
   const patient = getPatients().find((p) => p.id === id);
   return res.json(patient); // Return single patient data
+});
+
+app.post("/api/patients/:id/entries", (req, res) => {
+  const id = req.params.id;
+  try {
+    const newEntry = entrySchema.parse(req.body);
+    const addedEntry = addEntry(id, newEntry);
+    //===============================
+    console.log("POST patient ID:", id);
+    console.log("Added entry:", addedEntry);
+    //=========================
+
+    res.status(201).json(addedEntry);
+  } catch (error: unknown) {
+    if (error instanceof z.ZodError)
+      res.status(400).send({
+        error: error.issues[0].message,
+        field: error.issues[0].path[0],
+      });
+  }
 });
 
 const PORT = process.env.PORT || 3001;

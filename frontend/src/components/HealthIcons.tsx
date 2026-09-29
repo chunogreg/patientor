@@ -5,14 +5,14 @@ import HealthAndSafetyIcon from "@mui/icons-material/HealthAndSafety";
 import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 //import MedicalInformationIcon from "@mui/icons-material/MedicalInformation";
 
-const Rating = ({ rating }: { rating: number | null }) => {
+const RatingIcons = ({ rating }: { rating: number | null }) => {
   switch (rating) {
     case 0:
       return <FavoriteIcon sx={{ color: "#1a8321" }} />;
     case 1:
       return <FavoriteIcon sx={{ color: "#d7d72d" }} />;
     case 2:
-      return <FavoriteIcon sx={{ color: "#e6b03b" }} />;
+      return <FavoriteIcon sx={{ color: "#f98d34" }} />;
     case 3:
       return <FavoriteIcon sx={{ color: "#c90c15" }} />;
   }
@@ -28,4 +28,4 @@ const HealthTypeIcons = ({ type }: { type: string }) => {
       return <WorkHistoryIcon fontSize="medium" />;
   }
 };
-export { Rating, HealthTypeIcons };
+export { RatingIcons, HealthTypeIcons };
