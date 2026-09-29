@@ -29,7 +29,7 @@ app.get("/api/diagnoses", (_req, res) => {
 
 app.post("/api/patients", (req, res) => {
   try {
-    const { name, dateOfBirth, ssn, gender, occupation, entries } =
+    const { name, dateOfBirth, ssn, gender, occupation } =
       parseNewPatientsEntry(req.body);
     const addedEntry = addPatient({
       name,
@@ -37,9 +37,8 @@ app.post("/api/patients", (req, res) => {
       ssn,
       gender,
       occupation,
-      entries,
     });
-    res.json(addedEntry);
+    res.status(200).json(addedEntry);
   } catch (error: unknown) {
     let errorMsg = "Something went wrong";
     if (error instanceof Error) {

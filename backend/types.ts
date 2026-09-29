@@ -89,7 +89,7 @@ export const newZodEntrySchema = z.object({
   ssn: z.string(),
   gender: z.enum(Gender),
   occupation: z.string(),
-  entries: z.array(z.unknown()),
+  // entries: z.array(z.unknown()),
 });
 export type NewPatients = z.infer<typeof newZodEntrySchema>;
 
